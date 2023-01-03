@@ -25,8 +25,8 @@ class ExtractorKtTest {
             | * boo far
             | */
         """.trimMargin()
-        val input = comment + """
-            |
+        val input = """
+            |$comment
             |fun foobar() {
             |   println("foobar")
             |}
