@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4adfb462-6850-4903-8e74-375d974872ed" name="Changes" comment="Initial Commit">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="4adfb462-6850-4903-8e74-375d974872ed" name="Changes" comment="improved extract docs test input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/doktest/extractor/extractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/doktest/extractor/extractor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/doktest/extractor/ExtractorKtTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/doktest/extractor/ExtractorKtTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +121,35 @@
       <option name="project" value="LOCAL" />
       <updated>1672733654449</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="removed dup import from build.gradle.kts">
+      <created>1672737847688</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1672737847688</updated>
+    </task>
+    <task id="LOCAL-00003" summary="extract docs (basic)">
+      <created>1672737894696</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1672737894696</updated>
+    </task>
+    <task id="LOCAL-00004" summary="idea...">
+      <created>1672737907674</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1672737907674</updated>
+    </task>
+    <task id="LOCAL-00005" summary="improved extract docs test input">
+      <created>1672738137890</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1672738137890</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -140,6 +165,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="removed dup import from build.gradle.kts" />
+    <MESSAGE value="extract docs (basic)" />
+    <MESSAGE value="idea..." />
+    <MESSAGE value="improved extract docs test input" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved extract docs test input" />
   </component>
 </project>
