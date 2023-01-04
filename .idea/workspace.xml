@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4adfb462-6850-4903-8e74-375d974872ed" name="Changes" comment="improved extract docs test input">
+    <list default="true" id="4adfb462-6850-4903-8e74-375d974872ed" name="Changes" comment="workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/doktest/extractor/extractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/doktest/extractor/extractor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,6 +168,8 @@
     <MESSAGE value="extract docs (basic)" />
     <MESSAGE value="idea..." />
     <MESSAGE value="improved extract docs test input" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved extract docs test input" />
+    <MESSAGE value="extract docs -&gt; extract doc indices" />
+    <MESSAGE value="workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace.xml" />
   </component>
 </project>
