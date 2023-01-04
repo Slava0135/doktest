@@ -12,22 +12,26 @@ fun extractDocIndices(text: String): List<IntRange> {
     val lines = text.lines()
     val result = mutableListOf<IntRange>()
     var startIndex = 0
+    var offset = 0
     var isDoc = false
     for (lineNumber in lines.indices) {
         val line = lines[lineNumber]
-        if (isDoc) {
-            if (line.trimStart().startsWith(docEnd)) {
-                result.add(startIndex..lineNumber)
-                continue
-            }
-            if (!line.trimStart().startsWith(docMid) && line.isNotBlank()) {
-                isDoc = false
+        if (!isDoc) {
+            if (line.trimStart().startsWith(docStart)) {
+                isDoc = true
+                startIndex = lineNumber
+                offset = line.indexOf(docMid)
             }
         } else {
-            if (line.trimStart().startsWith(docStart)) {
-                startIndex = lineNumber
-                isDoc = true
+            if (line.trimStart().startsWith(docEnd)) {
+                if (line.indexOf(docMid) == offset) {
+                    result.add(startIndex..lineNumber)
+                }
+                isDoc = false
+                continue
             }
+            isDoc = line.trimStart().startsWith(docMid) && line.indexOf(docMid) == offset
+                    || line.isBlank()
         }
     }
     return result
