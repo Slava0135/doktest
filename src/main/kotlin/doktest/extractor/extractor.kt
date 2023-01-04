@@ -8,21 +8,16 @@ const val docStart = "/**"
 const val docMid = "*"
 const val docEnd = "*/"
 
-data class Doc(val content: String, val lines: IntRange)
-
-fun extractDocs(text: String): List<Doc> {
+fun extractDocIndices(text: String): List<IntRange> {
     val lines = text.lines()
-    val result = mutableListOf<Doc>()
-    var startIndex = 1
+    val result = mutableListOf<IntRange>()
+    var startIndex = 0
     var isDoc = false
-    for (i in lines.indices) {
-        val lineNumber = i + 1
-        val line = lines[i]
+    for (lineNumber in lines.indices) {
+        val line = lines[lineNumber]
         if (isDoc) {
             if (line.trimStart().startsWith(docEnd)) {
-                val endIndex = lineNumber
-                val content = lines.slice(startIndex - 1..endIndex - 1).joinToString("\n")
-                result.add(Doc(content, startIndex..endIndex))
+                result.add(startIndex..lineNumber)
                 continue
             }
             if (!line.trimStart().startsWith(docMid) && line.isNotBlank()) {

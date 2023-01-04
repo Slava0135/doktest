@@ -19,7 +19,7 @@ class ExtractorKtTest {
     }
 
     @Test
-    fun `test extract docs with 1 comment`() {
+    fun `test extract doc indices with 1 comment`() {
         val comment = """
             |/**
             | * boo far
@@ -31,7 +31,7 @@ class ExtractorKtTest {
             |   println("foobar")
             |}
         """.trimMargin()
-        val expect = listOf(Doc(comment.trimMargin(), 1..3))
-        assertEquals(expect, extractDocs(input))
+        val expect = listOf(0..2)
+        assertEquals(expect, extractDocIndices(input))
     }
 }
