@@ -36,3 +36,9 @@ fun extractDocIndices(text: String): List<IntRange> {
     }
     return result
 }
+
+fun extractDocContent(lines: List<String>): List<String> {
+    return lines.drop(1).dropLast(1).map {
+        it.trimStart().removePrefix(docMid).removePrefix(" ")
+    }
+}

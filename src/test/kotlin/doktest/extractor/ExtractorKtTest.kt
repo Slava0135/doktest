@@ -80,4 +80,23 @@ class ExtractorKtTest {
         """.trimMargin()
         assertEquals(emptyList(), extractDocIndices(input))
     }
+
+    @Test
+    fun `test extract doc content`() {
+        val input = """
+            |   /**
+            |    * foobar
+            |    *     indent
+            |
+            |    *bla bla bla
+            |    */
+        """.trimMargin()
+        val expect = """
+            |foobar
+            |    indent
+            |
+            |bla bla bla
+        """.trimMargin()
+        assertEquals(expect.lines(), extractDocContent(input.lines()))
+    }
 }
