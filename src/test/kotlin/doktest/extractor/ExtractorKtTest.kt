@@ -129,4 +129,35 @@ class ExtractorKtTest {
         )
         assertEquals(expect, extractDocs(input))
     }
+
+    @Test
+    fun `test extract raw doc tests`() {
+        val content = """
+            |0
+            |1
+            |```kotlin doctest 
+            |    println("hello")
+            |    println("world")
+            |```
+            |6
+            |7
+            |8
+            |```kotlin
+            |    println("not doctest")
+            |```
+            |12
+            |13
+            |```kotlin doctest
+            |    println("foobar")
+            |```
+            |17
+            |18
+        """.trimMargin()
+        val doc = Doc(content.lines(), 10..27)
+        val expect = listOf(
+            RawDocTest(listOf("    println(\"hello\")", "    println(\"world\")"), 12..15),
+            RawDocTest(listOf("    println(\"foobar\")"), 24..26)
+        )
+        assertEquals(expect, extractRawDocTests(doc))
+    }
 }
