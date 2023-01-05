@@ -4,6 +4,18 @@ fun extractPackage(text: String): String? {
     return text.split(" ").getOrNull(1)
 }
 
+data class Doc(val content: List<String>, val lineNumbers: IntRange)
+
+fun extractDocs(text: String): List<Doc> {
+    val indices = extractDocIndices(text)
+    val lines = text.lines()
+    val docs = indices.map {
+        val content = extractDocContent(lines.slice(it))
+        Doc(content, it.first + 1 until it.last)
+    }
+    return docs
+}
+
 const val docStart = "/**"
 const val docMid = "*"
 const val docEnd = "*/"

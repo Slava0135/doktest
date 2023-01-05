@@ -7,9 +7,11 @@ class ExtractorKtTest {
     @Test
     fun `test extract package with success`() {
         val packageName = "foo.bar"
-        val result = extractPackage("""
+        val result = extractPackage(
+            """
             |package $packageName
-        """.trimMargin())
+        """.trimMargin()
+        )
         assertEquals(packageName, result)
     }
 
@@ -98,5 +100,31 @@ class ExtractorKtTest {
             |bla bla bla
         """.trimMargin()
         assertEquals(expect.lines(), extractDocContent(input.lines()))
+    }
+
+    @Test
+    fun `test extract docs`() {
+        val input = """
+            |/**
+            | * boo far
+            | */
+            |fun foobar() {
+            |   println("foobar")
+            |}
+            |class Zoo() {
+            |   /**
+            |    * zoofaz
+            |   
+            |    */
+            |   fun zoofaz() {
+            |       println("zoofaz)
+            |   }
+            |}
+        """.trimMargin()
+        val expect = listOf(
+            Doc(listOf("boo far"), 1..1),
+            Doc(listOf("zoofaz", ""), 8..9)
+        )
+        assertEquals(expect, extractDocs(input))
     }
 }
