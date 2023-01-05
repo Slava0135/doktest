@@ -86,18 +86,20 @@ class ExtractorKtTest {
     @Test
     fun `test extract doc content`() {
         val input = """
-            |   /**
+            |   /** first
             |    * foobar
             |    *     indent
             |
             |    *bla bla bla
-            |    */
+            |    */  la last
         """.trimMargin()
         val expect = """
+            | first
             |foobar
             |    indent
             |
             |bla bla bla
+            |  la last
         """.trimMargin()
         assertEquals(expect.lines(), extractDocContent(input.lines()))
     }
@@ -105,9 +107,9 @@ class ExtractorKtTest {
     @Test
     fun `test extract docs`() {
         val input = """
-            |/**
+            |/** fa
             | * boo far
-            | */
+            | */    la
             |fun foobar() {
             |   println("foobar")
             |}
@@ -115,15 +117,15 @@ class ExtractorKtTest {
             |   /**
             |    * zoofaz
             |   
-            |    */
+            |    */ ooo
             |   fun zoofaz() {
             |       println("zoofaz)
             |   }
             |}
         """.trimMargin()
         val expect = listOf(
-            Doc(listOf("boo far"), 1..1),
-            Doc(listOf("zoofaz", ""), 8..9)
+            Doc(listOf(" fa", "boo far", "    la"), 0..2),
+            Doc(listOf("", "zoofaz", "", " ooo"), 7..10)
         )
         assertEquals(expect, extractDocs(input))
     }

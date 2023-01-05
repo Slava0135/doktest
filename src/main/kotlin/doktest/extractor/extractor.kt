@@ -11,7 +11,7 @@ fun extractDocs(text: String): List<Doc> {
     val lines = text.lines()
     val docs = indices.map {
         val content = extractDocContent(lines.slice(it))
-        Doc(content, it.first + 1 until it.last)
+        Doc(content, it)
     }
     return docs
 }
@@ -50,7 +50,10 @@ fun extractDocIndices(text: String): List<IntRange> {
 }
 
 fun extractDocContent(lines: List<String>): List<String> {
-    return lines.drop(1).dropLast(1).map {
+    val first = lines.first().trimStart().removePrefix(docStart)
+    val mid = lines.drop(1).dropLast(1).map {
         it.trimStart().removePrefix(docMid).removePrefix(" ")
     }
+    val last = lines.last().trimStart().removePrefix(docEnd)
+    return listOf(first, *mid.toTypedArray(), last)
 }
