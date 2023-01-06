@@ -1,5 +1,9 @@
 package doktest.extractor
 
+import doktest.extractor.helpers.Doc
+import doktest.extractor.helpers.extractDocContent
+import doktest.extractor.helpers.extractDocIndices
+import doktest.extractor.helpers.extractDocs
 import kotlin.test.*
 
 class ExtractorKtTest {
