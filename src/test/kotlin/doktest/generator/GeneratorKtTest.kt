@@ -16,11 +16,12 @@ class GeneratorKtTest {
             |    bazfoo()
             |}
         """.trimMargin()
-        assertEquals(expect,
+        assertEquals(
+            expect,
             generateDocTest(
                 RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1),
-                "foo.bar")
-                .content
+                "foo.bar"
+            ).content
         )
     }
 
