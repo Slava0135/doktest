@@ -18,7 +18,7 @@ class GeneratorKtTest {
         """.trimMargin()
         assertEquals(expect,
             generateDocTest(
-                RawDocTest(listOf("    foobaz()", "    bazfoo()"), 42..44),
+                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1),
                 "foo.bar")
                 .content
         )
