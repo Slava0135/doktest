@@ -15,6 +15,7 @@ fun extractDocs(text: String): List<Doc> {
 const val docStart = "/**"
 const val docMid = "*"
 const val docEnd = "*/"
+
 fun extractDocIndices(text: String): List<IntRange> {
     val lines = text.lines()
     val result = mutableListOf<IntRange>()
