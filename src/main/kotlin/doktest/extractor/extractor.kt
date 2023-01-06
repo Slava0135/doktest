@@ -1,8 +1,6 @@
 package doktest.extractor
 
-import doktest.extractor.helpers.RawDocTest
-import doktest.extractor.helpers.extractDocs
-import doktest.extractor.helpers.extractRawDocTests
+import doktest.extractor.helpers.*
 
 fun extractPackage(text: String): String? {
     return text.split(" ").getOrNull(1)
