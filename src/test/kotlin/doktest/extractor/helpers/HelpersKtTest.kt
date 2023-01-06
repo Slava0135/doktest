@@ -1,7 +1,5 @@
 package doktest.extractor.helpers
 
-import org.junit.jupiter.api.Test
-
 import kotlin.test.*
 
 class HelpersKtTest {
