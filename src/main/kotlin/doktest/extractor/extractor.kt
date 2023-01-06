@@ -12,8 +12,7 @@ fun extractRawDocTests(doc: Doc): List<RawDocTest> {
     val result = mutableListOf<RawDocTest>()
     var isDocTest = false
     var startIndex = 0
-    var relLineNumber = 0
-    for (line in doc.content) {
+    for ((relLineNumber, line) in doc.content.withIndex()) {
         if (!isDocTest) {
             if (line.startsWith("```kotlin doctest")) {
                 isDocTest = true
@@ -29,7 +28,6 @@ fun extractRawDocTests(doc: Doc): List<RawDocTest> {
                 isDocTest = false
             }
         }
-        relLineNumber++
     }
     return result
 }
