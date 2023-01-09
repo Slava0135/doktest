@@ -65,8 +65,7 @@ private fun extractDocContent(lines: List<String>): List<String> {
     val mid = lines.drop(1).dropLast(1).map {
         it.trimStart().removePrefix(docMid).removePrefix(" ")
     }
-    val last = lines.last().trimStart().removePrefix(docEnd)
-    return listOf(first, *mid.toTypedArray(), last)
+    return listOf(first, *mid.toTypedArray())
 }
 
 private fun extractRawDocTests(doc: Doc): List<RawDocTest> {
