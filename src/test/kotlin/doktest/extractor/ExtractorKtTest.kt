@@ -27,7 +27,7 @@ class ExtractorKtTest {
             | * ```kotlin doctest
             | *     foobar()
             | * ```
-            | */ 4
+            | */
             |fun foobar() {
             |    println("foobar")
             |}
@@ -35,7 +35,7 @@ class ExtractorKtTest {
             | * ```kotlin
             | *     println("h")
             | * ```
-            | */ 12
+            | */
             |class boofar() {
             |    /** 14
             |     *  15
@@ -47,11 +47,13 @@ class ExtractorKtTest {
             |     *  21
             |     *  22
             |     * ```kotlin doctest
-            |     * foobaz()
             |     * foobar()
+            |     * foobaz()
             |     * println("foobaz")
             |     * ```
-            |     */ 28
+            |
+            |     * 28
+            |     */
             |    fun foobaz() {
             |       println("foobaz")
             |    }
@@ -60,7 +62,7 @@ class ExtractorKtTest {
         val expect = listOf(
             RawDocTest(listOf("    foobar()"), 1..3),
             RawDocTest(listOf("foobaz()", "foobaz()"), 16..19),
-            RawDocTest(listOf("foobaz()", "foobar()", "println(\"foobaz\")"), 23..27),
+            RawDocTest(listOf("foobar()", "foobaz()", "println(\"foobaz\")"), 23..27),
         )
         assertEquals(expect, extractAllRawDocTests(input))
     }

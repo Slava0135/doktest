@@ -1,6 +1,6 @@
 package doktest.generator
 
-import doktest.extractor.helpers.RawDocTest
+import doktest.extractor.*
 import kotlin.test.*
 
 class GeneratorKtTest {
