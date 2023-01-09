@@ -1,6 +1,6 @@
 package doktest.generator
 
-import doktest.extractor.helpers.RawDocTest
+import doktest.extractor.RawDocTest
 
 data class DocTest(val content: String, val lineNumbers: IntRange)
 
