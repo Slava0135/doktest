@@ -27,9 +27,9 @@ private fun extractDocs(text: String): List<Doc> {
     return docs
 }
 
-const val docStart = "/**"
-const val docMid = "*"
-const val docEnd = "*/"
+const val DOC_START = "/**"
+const val DOC_MID = "*"
+const val DOC_END = "*/"
 
 private fun extractDocIndices(text: String): List<IntRange> {
     val lines = text.lines()
@@ -40,20 +40,20 @@ private fun extractDocIndices(text: String): List<IntRange> {
     for (lineNumber in lines.indices) {
         val line = lines[lineNumber]
         if (!isDoc) {
-            if (line.trimStart().startsWith(docStart)) {
+            if (line.trimStart().startsWith(DOC_START)) {
                 isDoc = true
                 startIndex = lineNumber
-                offset = line.indexOf(docMid)
+                offset = line.indexOf(DOC_MID)
             }
         } else {
-            if (line.trimStart().startsWith(docEnd)) {
-                if (line.indexOf(docMid) == offset) {
+            if (line.trimStart().startsWith(DOC_END)) {
+                if (line.indexOf(DOC_MID) == offset) {
                     result.add(startIndex..lineNumber)
                 }
                 isDoc = false
                 continue
             }
-            isDoc = line.trimStart().startsWith(docMid) && line.indexOf(docMid) == offset
+            isDoc = line.trimStart().startsWith(DOC_MID) && line.indexOf(DOC_MID) == offset
                     || line.isBlank()
         }
     }
@@ -61,9 +61,9 @@ private fun extractDocIndices(text: String): List<IntRange> {
 }
 
 private fun extractDocContent(lines: List<String>): List<String> {
-    val first = lines.first().trimStart().removePrefix(docStart)
+    val first = lines.first().trimStart().removePrefix(DOC_START)
     val mid = lines.drop(1).dropLast(1).map {
-        it.trimStart().removePrefix(docMid).removePrefix(" ")
+        it.trimStart().removePrefix(DOC_MID).removePrefix(" ")
     }
     return listOf(first, *mid.toTypedArray())
 }
