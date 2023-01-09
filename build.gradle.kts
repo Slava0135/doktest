@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.21"
-    application
+    `java-gradle-plugin`
 }
 
 group = "com.github.slava0135"
@@ -25,6 +25,11 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-application {
-    mainClass.set("MainKt")
+gradlePlugin {
+    plugins {
+        create("doktest") {
+            id = "com.github.slava0135.doktest"
+            implementationClass = "doktest.DoktestPlugin"
+        }
+    }
 }
