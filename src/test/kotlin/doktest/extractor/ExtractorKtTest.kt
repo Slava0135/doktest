@@ -67,4 +67,38 @@ class ExtractorKtTest {
         assertEquals(expect, extractAllRawDocTests(input))
     }
 
+    @Test
+    fun `test extract all raw doc tests invalid inputs`() {
+        val input = """
+            | /**
+            | * ```kotlin doctest
+            | *
+            | * ```
+            | */
+            | 
+            |/**
+            | * ```kotlin doctest
+            |  *
+            | * ```
+            | */
+            | 
+            |/**
+            | * ```kotlin doctest
+            | *
+            | * ```
+            |  */
+            |
+            |/**
+            | * ```kotlin doctest
+            | *
+            | */```
+            | 
+            |/**
+            | *  ```kotlin doctest
+            | *
+            | * ```
+            | */
+        """.trimMargin()
+        assertEquals(emptyList(), extractAllRawDocTests(input))
+    }
 }
