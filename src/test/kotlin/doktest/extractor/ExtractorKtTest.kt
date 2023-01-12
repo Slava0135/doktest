@@ -1,6 +1,7 @@
 package doktest.extractor
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ExtractorKtTest {
 
@@ -10,6 +11,8 @@ class ExtractorKtTest {
         val result = extractPackage(
             """
             |package $packageName
+            |
+            |import bla.bla
         """.trimMargin()
         )
         assertEquals(packageName, result)

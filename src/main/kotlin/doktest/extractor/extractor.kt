@@ -1,7 +1,7 @@
 package doktest.extractor
 
 fun extractPackage(text: String): String? {
-    return text.split(" ").getOrNull(1)
+    return text.split(" ", "\n").getOrNull(1)
 }
 
 data class RawDocTest(val content: List<String>, val lineNumbers: IntRange)
