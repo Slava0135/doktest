@@ -8,6 +8,7 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.TaskAction
+import java.io.File
 
 
 abstract class Doktest : DefaultTask() {
@@ -16,7 +17,7 @@ abstract class Doktest : DefaultTask() {
         project.plugins.withType(JavaPlugin::class.java) { javaPlugin: JavaPlugin ->
             val sourceSets = project.extensions.getByType(SourceSetContainer::class.java)
             val main = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
-            val test = sourceSets.getByName(SourceSet.TEST_SOURCE_SET_NAME)
+            val set = sourceSets.getByName(SOURCE_SET_NAME)
             main.allSource.files.forEach { file ->
                 if (file.extension == "kt") {
                     val text = file.readText()
@@ -26,14 +27,17 @@ abstract class Doktest : DefaultTask() {
                         generateDocTest(it, pkg!!)
                     }
                     if (pkg != null && docTests.isNotEmpty()) {
-                        println(docTests)
-//                        val set = sourceSets.create()
-//                        try {
-//                            set.compileClasspath += test.compileClasspath
-//                            set.compileClasspath += main.output
-//                        } finally {
-//                            sourceSets.remove(set)
-//                        }
+                        docTests.forEach { docTest ->
+                            set.resources.setSrcDirs(emptyList<Any>())
+                            val dir = temporaryDir
+                            dir.listFiles()?.forEach {
+                                it.delete()
+                            }
+                            val testFile = File(dir, "Main.kt")
+                            testFile.writeText(docTest.content)
+                            set.resources.srcDir(dir.path)
+                            println(set.allSource.files)
+                        }
                     }
                 }
             }
