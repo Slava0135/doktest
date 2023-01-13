@@ -14,10 +14,16 @@ import java.io.File
 abstract class Doktest : DefaultTask() {
     @TaskAction
     fun test() {
-        project.plugins.withType(JavaPlugin::class.java) { javaPlugin: JavaPlugin ->
+        project.plugins.withType(JavaPlugin::class.java) {
             val sourceSets = project.extensions.getByType(SourceSetContainer::class.java)
             val main = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
             val set = sourceSets.getByName(SOURCE_SET_NAME)
+            set.java.srcDir(emptyList<Any>())
+            var dir = temporaryDir
+            dir.listFiles()?.forEach {
+                it.delete()
+            }
+            set.java.srcDir(dir.path)
             main.allSource.files.forEach { file ->
                 if (file.extension == "kt") {
                     val text = file.readText()
@@ -28,15 +34,8 @@ abstract class Doktest : DefaultTask() {
                     }
                     if (pkg != null && docTests.isNotEmpty()) {
                         docTests.forEach { docTest ->
-                            set.resources.setSrcDirs(emptyList<Any>())
-                            val dir = temporaryDir
-                            dir.listFiles()?.forEach {
-                                it.delete()
-                            }
-                            val testFile = File(dir, "Main.kt")
+                            val testFile = File(dir, file.nameWithoutExtension + "_" + docTest.lineNumbers + ".kt")
                             testFile.writeText(docTest.content)
-                            set.resources.srcDir(dir.path)
-                            println(set.allSource.files)
                         }
                     }
                 }

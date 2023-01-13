@@ -16,6 +16,9 @@ class DoktestPlugin : Plugin<Project> {
             set.compileClasspath += test.compileClasspath
             set.runtimeClasspath += test.runtimeClasspath
         }
-        target.tasks.create("doktest", Doktest::class.java)
+        val compileKotlin = set.getCompileTaskName("kotlin")
+        val compileKotlinTask = target.tasks.getByName(compileKotlin)
+        val task = target.tasks.create("doktest", Doktest::class.java)
+        task.finalizedBy(compileKotlinTask)
     }
 }
