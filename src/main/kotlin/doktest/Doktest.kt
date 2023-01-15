@@ -19,7 +19,7 @@ abstract class Doktest : DefaultTask() {
             val main = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
             val set = sourceSets.getByName(SOURCE_SET_NAME)
             set.java.srcDir(emptyList<Any>())
-            var dir = temporaryDir
+            val dir = temporaryDir
             dir.listFiles()?.forEach {
                 it.delete()
             }
