@@ -20,26 +20,31 @@ abstract class Doktest : DefaultTask() {
             val main = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
             val set = sourceSets.getByName(SOURCE_SET_NAME)
             val dir = setupDir(set)
+            var id = 0
             for (file in main.allSource.files) {
                 if (file.extension == "kt") {
+                    id++
                     val text = file.readText()
                     val pkg = extractPackage(text)
                     val rawDocTests = extractAllRawDocTests(text)
                     if (pkg == null) {
-                        logger.info("File ${file.path} - no package definition detected, skipping")
+                        logger.info("file $file - no package definition detected, skipping")
                         continue
                     }
                     val docTests = rawDocTests.map {
                         generateDocTest(it, pkg)
                     }
                     if (docTests.isEmpty()) {
-                        logger.info("File ${file.path} - no doctests detected, skipping ")
+                        logger.info("file $file - no doctests detected, skipping ")
                         continue
                     }
-                    logger.info("File ${file.path} - detected ${docTests.size} doctests")
+                    logger.info("file $file, detected ${docTests.size} doctests")
+                    val fileDirectory = File(dir, id.toString())
+                    fileDirectory.mkdir()
+                    logger.info("Generating doctests in $fileDirectory:")
                     docTests.forEach { docTest ->
-                        val testFile = File(dir, generateTestFileName(file, docTest))
-                        logger.info("Generated doctest from line numbers ${docTest.lineNumbers}")
+                        val testFile = File(fileDirectory, generateTestFileName(file, docTest))
+                        logger.info("  $testFile  ")
                         testFile.writeText(docTest.content)
                     }
                 }
