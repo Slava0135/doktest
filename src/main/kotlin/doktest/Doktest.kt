@@ -40,9 +40,10 @@ abstract class Doktest : DefaultTask() {
 
                     fileId++
                     docTests.forEach { docTest ->
-                        val testFile = File(dir, "${file.nameWithoutExtension}(${fileId})${docTest.lineNumbers}.kt")
+                        val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
+                        val testFile = File(dir, "${file.nameWithoutExtension}(${fileId})${lineNumbers}.kt")
                         val testContent = """
-                            |// generated from $file - lines ${docTest.lineNumbers}
+                            |// generated from $file - lines ${lineNumbers}
                             |${docTest.content}
                         """.trimMargin()
                         testFile.writeText(testContent)
