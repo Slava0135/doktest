@@ -20,10 +20,10 @@ abstract class Doktest : DefaultTask() {
             val main = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
             val set = sourceSets.getByName(SOURCE_SET_NAME)
             val dir = setupDir(set)
-            var id = 0
+            var fileId = 0
             for (file in main.allSource.files) {
                 if (file.extension == "kt") {
-                    id++
+                    fileId++
                     val text = file.readText()
                     val pkg = extractPackage(text)
                     val rawDocTests = extractAllRawDocTests(text)
@@ -39,13 +39,19 @@ abstract class Doktest : DefaultTask() {
                         continue
                     }
                     logger.info("file $file, detected ${docTests.size} doctests")
-                    val fileDirectory = File(dir, id.toString())
+
+                    val fileDirectory = File(dir, fileId.toString())
                     fileDirectory.mkdir()
                     logger.info("Generating doctests in $fileDirectory:")
+
                     docTests.forEach { docTest ->
                         val testFile = File(fileDirectory, generateTestFileName(file, docTest))
                         logger.info("  $testFile  ")
-                        testFile.writeText(docTest.content)
+                        val testContent = """
+                            |// generated from $file - lines ${docTest.lineNumbers}
+                            |${docTest.content}
+                        """.trimMargin()
+                        testFile.writeText(testContent)
                     }
                 }
             }
