@@ -2,7 +2,6 @@ package doktest
 
 import doktest.extractor.extractAllRawDocTests
 import doktest.extractor.extractPackage
-import doktest.generator.DocTest
 import doktest.generator.generateDocTest
 import org.gradle.api.DefaultTask
 import org.gradle.api.plugins.JavaPlugin
@@ -23,7 +22,6 @@ abstract class Doktest : DefaultTask() {
             var fileId = 0
             for (file in main.allSource.files) {
                 if (file.extension == "kt") {
-                    fileId++
                     val text = file.readText()
                     val pkg = extractPackage(text)
                     val rawDocTests = extractAllRawDocTests(text)
@@ -38,34 +36,28 @@ abstract class Doktest : DefaultTask() {
                         logger.info("file $file - no doctests detected, skipping ")
                         continue
                     }
-                    logger.info("file $file, detected ${docTests.size} doctests")
+                    logger.info("file $file detected ${docTests.size} doctests")
 
-                    val fileDirectory = File(dir, fileId.toString())
-                    fileDirectory.mkdir()
-                    logger.info("Generating doctests in $fileDirectory:")
-
+                    fileId++
                     docTests.forEach { docTest ->
-                        val testFile = File(fileDirectory, generateTestFileName(file, docTest))
-                        logger.info("  $testFile  ")
+                        val testFile = File(dir, "${file.nameWithoutExtension}(${fileId})${docTest.lineNumbers}.kt")
                         val testContent = """
                             |// generated from $file - lines ${docTest.lineNumbers}
                             |${docTest.content}
                         """.trimMargin()
                         testFile.writeText(testContent)
+                        logger.info("  $testFile  ")
                     }
                 }
             }
         }
     }
 
-    private fun generateTestFileName(file: File, docTest: DocTest) =
-        file.nameWithoutExtension + "_" + docTest.lineNumbers + ".kt"
-
     private fun setupDir(set: SourceSet): File {
-        set.java.srcDir(emptyList<Any>())
+        set.java.setSrcDirs(emptyList<Any>())
         val dir = temporaryDir
         dir.listFiles()?.forEach {
-            it.delete()
+            it.deleteRecursively()
         }
         set.java.srcDir(dir.path)
         return dir
