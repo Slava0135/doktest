@@ -16,7 +16,7 @@ import java.io.File
 abstract class Doktest : DefaultTask() {
     private var fileName: String? = null
 
-    @Option(option = "file-name", description = "Only test single file with specified path suffix")
+    @Option(option = "file", description = "Only test single file with specified path suffix")
     fun setFileName(fileName: String) {
         this.fileName = fileName
     }
