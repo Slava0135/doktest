@@ -15,10 +15,22 @@ import java.io.File
 
 abstract class Doktest : DefaultTask() {
     private var fileName: String? = null
+    private var lineNumber: Int? = null
 
     @Option(option = "file", description = "Only test single file with specified path suffix")
     fun setFileName(fileName: String) {
         this.fileName = fileName
+    }
+
+    @Option(option = "line", description = "Only run single test from specified file on the specified line")
+    fun setLineNumber(lineNumber: String) {
+        val parsed = lineNumber.toIntOrNull()
+        if (parsed == null) {
+            val msg = "option --line: '$lineNumber' is not Integer"
+            logger.error(msg)
+            throw InvalidUserDataException(msg)
+        }
+        this.lineNumber = parsed
     }
 
     @TaskAction
@@ -51,8 +63,8 @@ abstract class Doktest : DefaultTask() {
         for (file in sourceFiles) {
             if (file.extension == "kt") {
                 fileId++
-                val docTests = extractAllDoctests(file)
-                docTests?.forEach { docTest ->
+                val docTests = extractAllDoctests(file) ?: return
+                docTests.forEach { docTest ->
                     val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
                     val testFile = File(dir, "${file.nameWithoutExtension}(${fileId})${lineNumbers}.kt")
                     val testContent = """
@@ -81,8 +93,19 @@ abstract class Doktest : DefaultTask() {
             throw InvalidUserDataException(msg)
         }
         val file = matchingFiles.first()
-        val docTests = extractAllDoctests(file)
-        docTests?.forEach { docTest ->
+        var docTests = extractAllDoctests(file) ?: return
+        if (lineNumber != null) {
+            docTests = docTests.filter { (lineNumber!! - 1) in it.lineNumbers }
+        }
+        if (docTests.isEmpty()) {
+            var msg = "no doctests found in '$fileNameWithExt'"
+            if (lineNumber != null) {
+                msg += " on line $lineNumber"
+            }
+            logger.error(msg)
+            throw InvalidUserDataException(msg)
+        }
+        docTests.forEach { docTest ->
             val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
             val testFile = File(dir, "${file.nameWithoutExtension}${lineNumbers}.kt")
             val testContent = """
