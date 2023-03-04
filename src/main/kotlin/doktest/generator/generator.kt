@@ -5,12 +5,13 @@ import doktest.extractor.RawDocTest
 data class DocTest(val content: String, val lineNumbers: IntRange)
 
 fun generateDocTest(doc: RawDocTest, pkg: String): DocTest {
+    val imports = listOf("import $pkg.*", "import kotlin.test.*") + doc.content.filter { it.startsWith("import ") }
+    val main = doc.content.filter { it !in imports }
     val content = """
-        |import $pkg.*
-        |import kotlin.test.*
+        |${imports.joinToString("\n")}
         |
         |fun main() {
-        |${doc.content.joinToString("\n")}
+        |${main.joinToString("\n")}
         |}
     """.trimMargin()
     return DocTest(content, doc.lineNumbers)
