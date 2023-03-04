@@ -67,19 +67,20 @@ abstract class Doktest : DefaultTask() {
     }
 
     private fun testSingleSourceFile(sourceFiles: Set<File>, dir: File, fileName: String) {
-        val count = sourceFiles.count { it.path.endsWith(fileName) }
-        if (count == 0) {
+        val matchingFiles = sourceFiles.filter { it.path.endsWith(fileName) }
+        if (matchingFiles.isEmpty()) {
             val msg = "no files ending with '$fileName' found"
             logger.error(msg)
             throw InvalidUserDataException(msg)
         }
-        if (count > 1) {
+        if (matchingFiles.size > 1) {
             val msg = "more than 1 files found ending with '$fileName'"
             logger.error(msg)
+            logger.error(matchingFiles.sorted().joinToString("\n"))
             throw InvalidUserDataException(msg)
         }
-        val file = sourceFiles.find { it.path.endsWith(fileName) }
-        val docTests = extractAllDoctests(file!!)
+        val file = matchingFiles.first()
+        val docTests = extractAllDoctests(file)
         docTests?.forEach { docTest ->
             val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
             val testFile = File(dir, "${file.nameWithoutExtension}${lineNumbers}.kt")
