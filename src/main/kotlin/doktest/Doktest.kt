@@ -67,14 +67,15 @@ abstract class Doktest : DefaultTask() {
     }
 
     private fun testSingleSourceFile(sourceFiles: Set<File>, dir: File, fileName: String) {
-        val matchingFiles = sourceFiles.filter { it.path.endsWith(fileName) }
+        val fileNameWithExt = fileName.removeSuffix(".kt") + ".kt"
+        val matchingFiles = sourceFiles.filter { it.path.endsWith(fileNameWithExt) }
         if (matchingFiles.isEmpty()) {
-            val msg = "no files ending with '$fileName' found"
+            val msg = "no files ending with '$fileNameWithExt' found"
             logger.error(msg)
             throw InvalidUserDataException(msg)
         }
         if (matchingFiles.size > 1) {
-            val msg = "more than 1 files found ending with '$fileName'"
+            val msg = "more than 1 files found ending with '$fileNameWithExt'"
             logger.error(msg)
             logger.error(matchingFiles.sorted().joinToString("\n"))
             throw InvalidUserDataException(msg)
