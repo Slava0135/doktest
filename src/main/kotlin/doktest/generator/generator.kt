@@ -2,7 +2,7 @@ package doktest.generator
 
 import doktest.extractor.RawDocTest
 
-data class DocTest(val content: String, val lineNumbers: IntRange)
+data class DocTest(val content: String, val lineNumbers: IntRange, val pkg: String)
 
 fun generateDocTest(doc: RawDocTest, pkg: String): DocTest {
     val imports = listOf("import $pkg.*", "import kotlin.test.*") + doc.content.filter { it.startsWith("import ") }
@@ -14,5 +14,5 @@ fun generateDocTest(doc: RawDocTest, pkg: String): DocTest {
         |${main.joinToString("\n")}
         |}
     """.trimMargin()
-    return DocTest(content, doc.lineNumbers)
+    return DocTest(content, doc.lineNumbers, pkg)
 }

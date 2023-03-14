@@ -66,7 +66,7 @@ abstract class Doktest : DefaultTask() {
                 val docTests = extractAllDoctests(file) ?: return
                 docTests.forEach { docTest ->
                     val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
-                    val testFile = File(dir, "${file.nameWithoutExtension}(${fileId})${lineNumbers}.kt")
+                    val testFile = File(dir, generateFileName(docTest, file, lineNumbers))
                     val testContent = """
                                 |// generated from $file - lines ${lineNumbers}
                                 |${docTest.content}
@@ -107,7 +107,7 @@ abstract class Doktest : DefaultTask() {
         }
         docTests.forEach { docTest ->
             val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
-            val testFile = File(dir, "${file.nameWithoutExtension}${lineNumbers}.kt")
+            val testFile = File(dir, generateFileName(docTest, file, lineNumbers))
             val testContent = """
                                 |// generated from $file - lines ${lineNumbers}
                                 |${docTest.content}
@@ -116,6 +116,12 @@ abstract class Doktest : DefaultTask() {
             logger.info("  $testFile  ")
         }
     }
+
+    private fun generateFileName(
+        docTest: DocTest,
+        file: File,
+        lineNumbers: IntRange
+    ) = "${docTest.pkg}.${file.nameWithoutExtension}.${lineNumbers.first}-${lineNumbers.last}.kt"
 
     private fun extractAllDoctests(file: File): List<DocTest>? {
         val text = file.readText()
