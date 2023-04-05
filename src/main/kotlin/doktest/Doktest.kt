@@ -132,7 +132,13 @@ abstract class Doktest : DefaultTask() {
             return null
         }
         val docTests = rawDocTests.map {
-            generateDocTest(it, pkg)
+            val name = "${
+                pkg.replace(
+                    '.',
+                    '_'
+                )
+            }_${file.nameWithoutExtension}_${it.lineNumbers.first + 1}_${it.lineNumbers.last + 1}"
+            generateDocTest(it, pkg, name)
         }
         if (docTests.isEmpty()) {
             logger.info("file $file - no doctests detected, skipping ")
