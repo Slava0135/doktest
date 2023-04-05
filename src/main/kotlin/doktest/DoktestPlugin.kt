@@ -8,6 +8,7 @@ import org.gradle.api.tasks.testing.Test
 
 const val SOURCE_SET_NAME = "doktest"
 
+@Suppress("unused")
 class DoktestPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val sourceSets = target.extensions.getByType(SourceSetContainer::class.java)
