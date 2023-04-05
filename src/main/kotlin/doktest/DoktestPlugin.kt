@@ -21,7 +21,8 @@ class DoktestPlugin : Plugin<Project> {
         val compileKotlin = doktestSet.getCompileTaskName("kotlin")
         val compileKotlinTask = target.tasks.getByName(compileKotlin)
         val doktestTestTask = target.tasks.create("doktestTest", Test::class.java).apply {
-            sourceSets.add(doktestSet)
+            testClassesDirs = doktestSet.output.classesDirs
+            classpath = doktestSet.runtimeClasspath
             useJUnitPlatform()
         }
         doktestTask.finalizedBy(compileKotlinTask, doktestTestTask)
