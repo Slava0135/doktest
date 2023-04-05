@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.api.tasks.testing.Test
 
 const val SOURCE_SET_NAME = "doktest"
 
@@ -16,12 +17,13 @@ class DoktestPlugin : Plugin<Project> {
             doktestSet.compileClasspath += testSet.compileClasspath
             doktestSet.runtimeClasspath += testSet.runtimeClasspath
         }
-//        val testTask = target.tasks.named("test") as TaskProvider<Test>
-        target.tasks.create("doktest", Doktest::class.java).apply {
-//            testFrameworkProperty.set(testTask.get().testFramework)
+        val doktestTask = target.tasks.create("doktest", Doktest::class.java)
+        val compileKotlin = doktestSet.getCompileTaskName("kotlin")
+        val compileKotlinTask = target.tasks.getByName(compileKotlin)
+        val doktestTestTask = target.tasks.create("doktestTest", Test::class.java).apply {
+            sourceSets.add(doktestSet)
             useJUnitPlatform()
-            testClassesDirs = doktestSet.output.classesDirs
-            classpath = doktestSet.runtimeClasspath
         }
+        doktestTask.finalizedBy(compileKotlinTask, doktestTestTask)
     }
 }

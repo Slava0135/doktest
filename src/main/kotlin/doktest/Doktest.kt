@@ -4,16 +4,16 @@ import doktest.extractor.extractAllRawDocTests
 import doktest.extractor.extractPackage
 import doktest.generator.DocTest
 import doktest.generator.generateDocTest
+import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.api.tasks.testing.Test
 import java.io.File
 
-abstract class Doktest : Test() {
+abstract class Doktest : DefaultTask() {
     private var fileName: String? = null
     private var lineNumber: Int? = null
 
@@ -46,7 +46,6 @@ abstract class Doktest : Test() {
                 testSingleSourceFile(main.allSource.files, dir, fileName!!)
             }
         }
-        executeTests()
     }
 
     private fun setupDir(set: SourceSet): File {
