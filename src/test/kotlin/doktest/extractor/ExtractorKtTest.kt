@@ -63,9 +63,9 @@ class ExtractorKtTest {
             |}
         """.trimMargin()
         val expect = listOf(
-            RawDocTest(listOf("    foobar()"), 1..3),
-            RawDocTest(listOf("foobaz()", "foobaz()"), 16..19),
-            RawDocTest(listOf("foobar()", "foobaz()", ""), 23..27),
+            RawDocTest(listOf("    foobar()"), 1..3, Option.RUN),
+            RawDocTest(listOf("foobaz()", "foobaz()"), 16..19, Option.RUN),
+            RawDocTest(listOf("foobar()", "foobaz()", ""), 23..27, Option.RUN),
         )
         assertEquals(expect, extractAllRawDocTests(input))
     }
@@ -103,5 +103,48 @@ class ExtractorKtTest {
             | */
         """.trimMargin()
         assertEquals(emptyList(), extractAllRawDocTests(input))
+    }
+
+    @Test
+    fun `test extract all raw doc tests options`() {
+        val input = """
+            |/**
+            | * ```kotlin doctest
+            | *     foobar()
+            | * ```
+            | */
+            |
+            |/**
+            | * ```kotlin doctest:run
+            | *     foobar()
+            | * ```
+            | */
+            | 
+            |/**
+            | * ```kotlin doctest:norun
+            | *     foobar()
+            | * ```
+            | */
+            | 
+            |/**
+            | * ```kotlin doctest:nomain
+            | *     foobar()
+            | * ```
+            | */
+            | 
+            |/**
+            | * ```kotlin doctest:nonsense
+            | *     foobar()
+            | * ```
+            | */
+        """.trimMargin()
+        val expect = listOf(
+            Option.RUN,
+            Option.RUN,
+            Option.NORUN,
+            Option.NOMAIN,
+            Option.RUN
+        )
+        assertEquals(expect, extractAllRawDocTests(input).map { it.option })
     }
 }

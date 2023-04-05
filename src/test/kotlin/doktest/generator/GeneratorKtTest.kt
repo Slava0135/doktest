@@ -1,6 +1,7 @@
 package doktest.generator
 
 import doktest.extractor.RawDocTest
+import doktest.extractor.Option
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -20,7 +21,7 @@ class GeneratorKtTest {
         assertEquals(
             expect,
             generateDocTest(
-                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1),
+                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1, Option.NORUN),
                 "foo.bar"
             ).content
         )
@@ -42,7 +43,7 @@ class GeneratorKtTest {
         assertEquals(
             expect,
             generateDocTest(
-                RawDocTest(listOf("import bar.foo", "import foo.foo", "    foobaz()", "    bazfoo()"), -1..-1),
+                RawDocTest(listOf("import bar.foo", "import foo.foo", "    foobaz()", "    bazfoo()"), -1..-1, Option.NORUN),
                 "foo.bar"
             ).content
         )
