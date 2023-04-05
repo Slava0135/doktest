@@ -71,4 +71,28 @@ class GeneratorKtTest {
             ).content
         )
     }
+
+    @Test
+    fun `test generate doc test with run option`() {
+        val expect = """
+            |import foo.bar.*
+            |import kotlin.test.*
+            |
+            |class BooBar {
+            |@Test
+            |fun main() {
+            |    foobaz()
+            |    bazfoo()
+            |}
+            |}
+        """.trimMargin()
+        assertEquals(
+            expect,
+            generateDocTest(
+                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1, Option.RUN),
+                "foo.bar",
+                "BooBar"
+            ).content
+        )
+    }
 }
