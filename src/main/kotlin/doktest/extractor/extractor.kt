@@ -92,6 +92,7 @@ private fun extractRawDocTests(doc: Doc): List<RawDocTest> {
             }
             isDocTest = true
             startIndex = relLineNumber
+            option = defaultOption
             var lineTrim = line.removePrefix(DOCTEST_START)
             if (!lineTrim.startsWith(OPTION_SEP)) {
                 continue
@@ -101,10 +102,9 @@ private fun extractRawDocTests(doc: Doc): List<RawDocTest> {
             if (optionArgs.isEmpty()) {
                 continue
             }
-            option = try {
-                Option.valueOf(optionArgs.first().uppercase())
-            } catch (e: Exception) {
-                defaultOption
+            try {
+                option = Option.valueOf(optionArgs.first().uppercase())
+            } catch (_: Exception) {
             }
         } else {
             if (!line.startsWith(DOCTEST_END)) {
