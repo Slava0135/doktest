@@ -14,10 +14,10 @@ fun generateDocTest(doc: RawDocTest, pkg: String, testClassName: String = "Test"
             |${imports.joinToString("\n")}
             |
             |class $testClassName {
-            |@Test
-            |fun main() {
-            |${rawContent.joinToString("\n")}
-            |}
+            |    @Test
+            |    fun main() {
+            |${rawContent.joinToString("\n") { it.prependIndent(" ".repeat(8)) }}
+            |    }
             |}
             """.trimMargin()
 
@@ -26,7 +26,7 @@ fun generateDocTest(doc: RawDocTest, pkg: String, testClassName: String = "Test"
             |${imports.joinToString("\n")}
             |
             |fun main() {
-            |${rawContent.joinToString("\n")}
+            |${rawContent.joinToString("\n") { it.prependIndent(" ".repeat(4)) }}
             |}
             """.trimMargin()
 

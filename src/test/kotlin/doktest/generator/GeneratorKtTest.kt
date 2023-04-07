@@ -21,7 +21,7 @@ class GeneratorKtTest {
         assertEquals(
             expect,
             generateDocTest(
-                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1, Option.NORUN),
+                RawDocTest(listOf("foobaz()", "bazfoo()"), -1..-1, Option.NORUN),
                 "foo.bar"
             ).content
         )
@@ -44,7 +44,7 @@ class GeneratorKtTest {
             expect,
             generateDocTest(
                 RawDocTest(
-                    listOf("import bar.foo", "import foo.foo", "    foobaz()", "    bazfoo()"),
+                    listOf("import bar.foo", "import foo.foo", "foobaz()", "bazfoo()"),
                     -1..-1,
                     Option.NORUN
                 ),
@@ -79,17 +79,17 @@ class GeneratorKtTest {
             |import kotlin.test.*
             |
             |class BooBar {
-            |@Test
-            |fun main() {
-            |    foobaz()
-            |    bazfoo()
-            |}
+            |    @Test
+            |    fun main() {
+            |        foobaz()
+            |        bazfoo()
+            |    }
             |}
         """.trimMargin()
         assertEquals(
             expect,
             generateDocTest(
-                RawDocTest(listOf("    foobaz()", "    bazfoo()"), -1..-1, Option.RUN),
+                RawDocTest(listOf("foobaz()", "bazfoo()"), -1..-1, Option.RUN),
                 "foo.bar",
                 "BooBar"
             ).content
