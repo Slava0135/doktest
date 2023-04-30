@@ -4,8 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
-import org.gradle.api.tasks.TaskContainer
-import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.testing.Test
 
 const val SOURCE_SET_NAME = "doktest"
@@ -32,7 +30,3 @@ class DoktestPlugin : Plugin<Project> {
         doktestTask.finalizedBy(compileKotlinTask, doktestTestTask)
     }
 }
-
-@Suppress("unused")
-val TaskContainer.doktestTest: TaskProvider<Test>
-    get() = this.named(DOKTEST_TEST_TASK_NAME, Test::class.java)
