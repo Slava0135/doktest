@@ -117,6 +117,11 @@ class DoktestKtTest {
             .withArguments(DOKTEST_TASK_NAME, "--file", "bad")
             .withPluginClasspath()
             .buildAndFail()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", "unknown")
+            .withPluginClasspath()
+            .buildAndFail()
     }
 
     @Test
