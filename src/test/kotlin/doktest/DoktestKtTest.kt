@@ -97,4 +97,25 @@ class DoktestKtTest {
             .buildAndFail()
         assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
     }
+
+    @Test
+    fun `test file option`() {
+        readFileFromResource("/cases/two_files/good.kt", "$mainSrc/good.kt")
+        readFileFromResource("/cases/two_files/bad.kt", "$mainSrc/bad.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .buildAndFail()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", "good")
+            .withPluginClasspath()
+            .build()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", "bad")
+            .withPluginClasspath()
+            .buildAndFail()
+    }
 }
