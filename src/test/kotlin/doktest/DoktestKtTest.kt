@@ -92,4 +92,17 @@ class DoktestKtTest {
             .buildAndFail()
         assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
     }
+
+    @Test
+    fun `test nomain option fail`() {
+        File(testProjectDir, "$mainSrc/nomain_fail.kt").apply {
+            writeText(javaClass.getResource("/cases/nomain_fail.kt")!!.readText())
+        }
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .buildAndFail()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
+    }
 }
