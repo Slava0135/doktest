@@ -136,4 +136,34 @@ class DoktestKtTest {
             .withPluginClasspath()
             .buildAndFail()
     }
+
+    @Test
+    fun `test line option`() {
+        readFileFromResource("/cases/line_option.kt", "$mainSrc/line_option.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .buildAndFail()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", ".kt", "--line", "4")
+            .withPluginClasspath()
+            .buildAndFail()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", ".kt", "--line", "10")
+            .withPluginClasspath()
+            .buildAndFail()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", ".kt", "--line", "14")
+            .withPluginClasspath()
+            .build()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", ".kt", "--line", "666")
+            .withPluginClasspath()
+            .buildAndFail()
+    }
 }
