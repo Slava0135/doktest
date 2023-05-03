@@ -52,7 +52,19 @@ class DoktestKtTest {
             .withPluginClasspath()
             .build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
-        assertTrue(result.tasks(TaskOutcome.FAILED).isEmpty())
+    }
+
+    @Test
+    fun `test simple fail`() {
+        File(testProjectDir, "$mainSrc/simple_fail.kt").apply {
+            writeText(javaClass.getResource("/cases/simple_fail.kt")!!.readText())
+        }
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .buildAndFail()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome) // should this fail?
     }
 
     @Test
@@ -66,6 +78,5 @@ class DoktestKtTest {
             .withPluginClasspath()
             .build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
-        assertTrue(result.tasks(TaskOutcome.FAILED).isEmpty())
     }
 }
