@@ -44,7 +44,21 @@ class DoktestKtTest {
     @Test
     fun `test simple`() {
         File(testProjectDir, "$mainSrc/simple.kt").apply {
-            writeText(javaClass.getResource("/simple/simple.kt")!!.readText())
+            writeText(javaClass.getResource("/cases/simple.kt")!!.readText())
+        }
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":$DOKTEST_TASK_NAME")!!.outcome)
+        assertTrue(result.tasks(TaskOutcome.FAILED).isEmpty())
+    }
+
+    @Test
+    fun `test all options`() {
+        File(testProjectDir, "$mainSrc/all_options.kt").apply {
+            writeText(javaClass.getResource("/cases/all_options.kt")!!.readText())
         }
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
