@@ -19,14 +19,16 @@ class DoktestKtTest {
 
     private val mainSrc = "/src/main/kotlin"
 
+    private fun readFileFromResource(from: String, to: String): File {
+        return File(testProjectDir, to).apply {
+            writeText(javaClass.getResource(from)!!.readText())
+        }
+    }
+
     @BeforeEach
     fun setup() {
-        settingsFile = File(testProjectDir, "settings.gradle.kts").apply {
-            writeText(javaClass.getResource("/build/settings.gradle.kts")!!.readText())
-        }
-        buildFile = File(testProjectDir, "build.gradle.kts").apply {
-            writeText(javaClass.getResource("/build/build.gradle.kts")!!.readText())
-        }
+        settingsFile = readFileFromResource("/build/settings.gradle.kts", "settings.gradle.kts")
+        buildFile = readFileFromResource("/build/build.gradle.kts", "build.gradle.kts")
         Files.createDirectories(Paths.get(testProjectDir.path + mainSrc))
     }
 
@@ -43,9 +45,7 @@ class DoktestKtTest {
 
     @Test
     fun `test simple`() {
-        File(testProjectDir, "$mainSrc/simple.kt").apply {
-            writeText(javaClass.getResource("/cases/simple.kt")!!.readText())
-        }
+        readFileFromResource("/cases/simple.kt", "$mainSrc/simple.kt")
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments(DOKTEST_TASK_NAME)
@@ -56,9 +56,7 @@ class DoktestKtTest {
 
     @Test
     fun `test simple fail`() {
-        File(testProjectDir, "$mainSrc/simple_fail.kt").apply {
-            writeText(javaClass.getResource("/cases/simple_fail.kt")!!.readText())
-        }
+        readFileFromResource("/cases/simple_fail.kt", "$mainSrc/simple_fail.kt")
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments(DOKTEST_TASK_NAME)
@@ -69,9 +67,7 @@ class DoktestKtTest {
 
     @Test
     fun `test all options`() {
-        File(testProjectDir, "$mainSrc/all_options.kt").apply {
-            writeText(javaClass.getResource("/cases/all_options.kt")!!.readText())
-        }
+        readFileFromResource("/cases/all_options.kt", "$mainSrc/all_options.kt")
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments(DOKTEST_TASK_NAME)
@@ -82,9 +78,7 @@ class DoktestKtTest {
 
     @Test
     fun `test norun option fail`() {
-        File(testProjectDir, "$mainSrc/norun_fail.kt").apply {
-            writeText(javaClass.getResource("/cases/norun_fail.kt")!!.readText())
-        }
+        readFileFromResource("/cases/norun_fail.kt", "$mainSrc/norun_fail.kt")
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments(DOKTEST_TASK_NAME)
@@ -95,9 +89,7 @@ class DoktestKtTest {
 
     @Test
     fun `test nomain option fail`() {
-        File(testProjectDir, "$mainSrc/nomain_fail.kt").apply {
-            writeText(javaClass.getResource("/cases/nomain_fail.kt")!!.readText())
-        }
+        readFileFromResource("/cases/nomain_fail.kt", "$mainSrc/nomain_fail.kt")
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments(DOKTEST_TASK_NAME)
