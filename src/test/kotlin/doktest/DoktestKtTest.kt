@@ -118,4 +118,22 @@ class DoktestKtTest {
             .withPluginClasspath()
             .buildAndFail()
     }
+
+    @Test
+    fun `test import`() {
+        File(testProjectDir, "$mainSrc/test_import").mkdirs()
+        readFileFromResource("/cases/test_import/good.kt", "$mainSrc/test_import/good.kt")
+        readFileFromResource("/cases/simple.kt", "$mainSrc/simple.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .build()
+        readFileFromResource("/cases/test_import/bad.kt", "$mainSrc/test_import/bad.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .buildAndFail()
+    }
 }
