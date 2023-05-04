@@ -3,6 +3,7 @@
 plugins {
     kotlin("jvm") version "1.8.21"
     `java-gradle-plugin`
+    id("com.gradle.plugin-publish") version "1.2.0"
 }
 
 group = "com.github.slava0135"
@@ -26,12 +27,12 @@ kotlin {
 }
 
 gradlePlugin {
-    group = "com.github.slava0135"
+    group = "io.github.slava0135"
     website.set("https://github.com/Slava0135/doktest")
     vcsUrl.set("https://github.com/Slava0135/doktest.git")
     plugins {
         create("doktest") {
-            id = "com.github.slava0135.doktest"
+            id = "io.github.slava0135.doktest"
             displayName = "Plugin for testing code in KDoc comments"
             description = "A plugin that helps you verify Kotlin code in KDoc comments"
             tags.set(listOf("kotlin", "testing", "documentation", "docs"))
