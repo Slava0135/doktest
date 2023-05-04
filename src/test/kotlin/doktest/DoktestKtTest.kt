@@ -171,4 +171,14 @@ class DoktestKtTest {
             .withPluginClasspath()
             .buildAndFail()
     }
+
+    @Test
+    fun `test no redeclaration`() {
+        readFileFromResource("/cases/no_redeclaration.kt", "$mainSrc/no_redeclaration.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .build()
+    }
 }

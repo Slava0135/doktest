@@ -22,7 +22,8 @@ class GeneratorKtTest {
             expect,
             generateDocTest(
                 RawDocTest(listOf("foobaz()", "bazfoo()"), -1..-1, Option.NORUN),
-                "foo.bar"
+                "foo.bar",
+                "test"
             ).content
         )
     }
@@ -48,7 +49,8 @@ class GeneratorKtTest {
                     -1..-1,
                     Option.NORUN
                 ),
-                "foo.bar"
+                "foo.bar",
+                "test"
             ).content
         )
     }
@@ -56,6 +58,8 @@ class GeneratorKtTest {
     @Test
     fun `test generate doc test with nomain option`() {
         val expect = """
+            |package test
+            |
             |import foo.bar.*
             |import kotlin.test.*
             |
@@ -67,7 +71,8 @@ class GeneratorKtTest {
             expect,
             generateDocTest(
                 RawDocTest(listOf("class Foo {", "    val bar = 0", "}"), -1..-1, Option.NOMAIN),
-                "foo.bar"
+                "foo.bar",
+                "test"
             ).content
         )
     }
@@ -78,7 +83,7 @@ class GeneratorKtTest {
             |import foo.bar.*
             |import kotlin.test.*
             |
-            |class BooBar {
+            |class Test {
             |    @Test
             |    fun main() {
             |        foobaz()
@@ -91,7 +96,7 @@ class GeneratorKtTest {
             generateDocTest(
                 RawDocTest(listOf("foobaz()", "bazfoo()"), -1..-1, Option.RUN),
                 "foo.bar",
-                "BooBar"
+                "Test"
             ).content
         )
     }

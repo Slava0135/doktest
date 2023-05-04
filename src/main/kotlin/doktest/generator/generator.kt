@@ -5,7 +5,7 @@ import doktest.extractor.RawDocTest
 
 data class DocTest(val content: String, val lineNumbers: IntRange, val pkg: String)
 
-fun generateDocTest(doc: RawDocTest, pkg: String, testClassName: String = "Test"): DocTest {
+fun generateDocTest(doc: RawDocTest, pkg: String, generatedName: String): DocTest {
     val imports = listOf("import $pkg.*", "import kotlin.test.*") + doc.content.filter { it.startsWith("import ") }
     val rawContent = doc.content.filter { it !in imports }
     val content = when (doc.option) {
@@ -13,7 +13,7 @@ fun generateDocTest(doc: RawDocTest, pkg: String, testClassName: String = "Test"
             """
             |${imports.joinToString("\n")}
             |
-            |class $testClassName {
+            |class $generatedName {
             |    @Test
             |    fun main() {
             |${rawContent.joinToString("\n") { it.prependIndent(" ".repeat(8)) }}
@@ -32,6 +32,8 @@ fun generateDocTest(doc: RawDocTest, pkg: String, testClassName: String = "Test"
 
         Option.NOMAIN ->
             """
+            |package $generatedName
+            |
             |${imports.joinToString("\n")}
             |
             |${rawContent.joinToString("\n")}
