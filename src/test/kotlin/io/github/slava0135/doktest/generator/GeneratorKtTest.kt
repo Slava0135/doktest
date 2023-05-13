@@ -1,7 +1,7 @@
-package doktest.generator
+package io.github.slava0135.doktest.generator
 
-import doktest.extractor.Option
-import doktest.extractor.RawDocTest
+import io.github.slava0135.doktest.extractor.Option
+import io.github.slava0135.doktest.extractor.RawDocTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

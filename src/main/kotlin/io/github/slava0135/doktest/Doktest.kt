@@ -1,9 +1,9 @@
-package doktest
+package io.github.slava0135.doktest
 
-import doktest.extractor.extractAllRawDocTests
-import doktest.extractor.extractPackage
-import doktest.generator.DocTest
-import doktest.generator.generateDocTest
+import io.github.slava0135.doktest.extractor.extractAllRawDocTests
+import io.github.slava0135.doktest.extractor.extractPackage
+import io.github.slava0135.doktest.generator.DocTest
+import io.github.slava0135.doktest.generator.generateDocTest
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.plugins.JavaPlugin

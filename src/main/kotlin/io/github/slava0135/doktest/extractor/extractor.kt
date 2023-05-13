@@ -1,4 +1,4 @@
-package doktest.extractor
+package io.github.slava0135.doktest.extractor
 
 fun extractPackage(text: String): String? {
     return text.split(" ", "\n").getOrNull(1)

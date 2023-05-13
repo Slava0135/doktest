@@ -1,4 +1,4 @@
-package doktest
+package io.github.slava0135.doktest
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

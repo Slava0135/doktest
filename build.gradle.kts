@@ -6,7 +6,7 @@ plugins {
     id("com.gradle.plugin-publish") version "1.2.0"
 }
 
-group = "com.github.slava0135"
+group = "io.github.slava0135"
 version = "0.1.0"
 
 repositories {
@@ -36,7 +36,7 @@ gradlePlugin {
             displayName = "Plugin for testing code in KDoc comments"
             description = "A plugin that helps you verify Kotlin code in KDoc comments"
             tags.set(listOf("kotlin", "testing", "documentation", "docs"))
-            implementationClass = "doktest.DoktestPlugin"
+            implementationClass = "io.github.slava0135.doktest.DoktestPlugin"
         }
     }
 }

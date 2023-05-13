@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.20"
-    id("com.github.slava0135.doktest")
+    id("io.github.slava0135.doktest")
 }
 
 group = "org.example"

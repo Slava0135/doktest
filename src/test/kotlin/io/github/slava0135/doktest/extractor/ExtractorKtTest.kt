@@ -1,4 +1,4 @@
-package doktest.extractor
+package io.github.slava0135.doktest.extractor
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
