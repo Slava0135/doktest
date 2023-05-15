@@ -59,10 +59,8 @@ abstract class Doktest : DefaultTask() {
     }
 
     private fun testAllSourceFiles(sourceFiles: Set<File>, dir: File) {
-        var fileId = 0
         for (file in sourceFiles) {
             if (file.extension == "kt") {
-                fileId++
                 val docTests = extractAllDoctests(file) ?: return
                 docTests.forEach { docTest ->
                     val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
