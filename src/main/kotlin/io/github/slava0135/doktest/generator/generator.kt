@@ -6,12 +6,14 @@ import io.github.slava0135.doktest.extractor.RawDocTest
 data class DocTest(val content: String, val lineNumbers: IntRange, val pkg: String)
 
 fun generateDocTest(doc: RawDocTest, pkg: String, generatedName: String): DocTest {
-    val imports = listOf("import $pkg.*", "import kotlin.test.*") + doc.content.filter { it.startsWith("import ") }
-    val rawContent = doc.content.filter { it !in imports }
+    val defaultImports = listOf("import $pkg.*", "import kotlin.test.*")
+    val docImports = doc.content.filter { it.startsWith("import ") }
+    val allImports = defaultImports + docImports
+    val rawContent = doc.content.filter { it !in allImports }
     val content = when (doc.option) {
         Option.RUN ->
             """
-            |${imports.joinToString("\n")}
+            |${allImports.joinToString("\n")}
             |
             |class $generatedName {
             |    @Test
@@ -23,7 +25,7 @@ fun generateDocTest(doc: RawDocTest, pkg: String, generatedName: String): DocTes
 
         Option.NORUN ->
             """
-            |${imports.joinToString("\n")}
+            |${allImports.joinToString("\n")}
             |
             |fun main() {
             |${rawContent.joinToString("\n") { it.prependIndent(" ".repeat(4)) }}
@@ -34,7 +36,7 @@ fun generateDocTest(doc: RawDocTest, pkg: String, generatedName: String): DocTes
             """
             |package $generatedName
             |
-            |${imports.joinToString("\n")}
+            |${allImports.joinToString("\n")}
             |
             |${rawContent.joinToString("\n")}
             """.trimMargin()
