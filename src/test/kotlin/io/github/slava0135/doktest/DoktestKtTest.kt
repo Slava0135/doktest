@@ -181,4 +181,19 @@ class DoktestKtTest {
             .withPluginClasspath()
             .build()
     }
+
+    @Test
+    fun `test no doctests in file`() {
+        readFileFromResource("/cases/no_doctests.kt", "$mainSrc/no_doctests.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .build()
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--file", ".kt")
+            .withPluginClasspath()
+            .buildAndFail()
+    }
 }

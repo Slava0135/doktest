@@ -91,11 +91,11 @@ abstract class Doktest : DefaultTask() {
             throw InvalidUserDataException(msg)
         }
         val file = matchingFiles.first()
-        var docTests = extractAllDoctests(file) ?: return
+        var docTests = extractAllDoctests(file)
         if (lineNumber != null) {
-            docTests = docTests.filter { (lineNumber!! - 1) in it.lineNumbers }
+            docTests = docTests?.filter { (lineNumber!! - 1) in it.lineNumbers }
         }
-        if (docTests.isEmpty()) {
+        if (docTests.isNullOrEmpty()) {
             var msg = "no doctests found in '$fileNameWithExt'"
             if (lineNumber != null) {
                 msg += " on line $lineNumber"
