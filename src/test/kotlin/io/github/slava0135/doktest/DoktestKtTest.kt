@@ -196,4 +196,14 @@ class DoktestKtTest {
             .withPluginClasspath()
             .buildAndFail()
     }
+
+    @Test
+    fun `test line option no file provided`() {
+        readFileFromResource("/cases/simple.kt", "$mainSrc/simple.kt")
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME, "--line", "42")
+            .withPluginClasspath()
+            .buildAndFail()
+    }
 }

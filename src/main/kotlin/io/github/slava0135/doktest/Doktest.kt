@@ -41,6 +41,11 @@ abstract class Doktest : DefaultTask() {
             val set = sourceSets.getByName(SOURCE_SET_NAME)
             val dir = setupDir(set)
             if (fileName == null) {
+                if (lineNumber != null) {
+                    val msg = "no --file option provided when using --line option"
+                    logger.error(msg)
+                    throw InvalidUserDataException(msg)
+                }
                 testAllSourceFiles(main.allSource.files, dir)
             } else {
                 testSingleSourceFile(main.allSource.files, dir, fileName!!)
