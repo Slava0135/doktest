@@ -66,7 +66,7 @@ abstract class Doktest : DefaultTask() {
                     val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
                     val testFile = File(dir, generateFileName(docTest, file, lineNumbers))
                     val testContent = """
-                                |// generated from $file - lines ${lineNumbers}
+                                |// generated from $file - lines $lineNumbers
                                 |${docTest.content}
                             """.trimMargin()
                     testFile.writeText(testContent)
@@ -107,7 +107,7 @@ abstract class Doktest : DefaultTask() {
             val lineNumbers = (docTest.lineNumbers.first + 1)..(docTest.lineNumbers.last + 1)
             val testFile = File(dir, generateFileName(docTest, file, lineNumbers))
             val testContent = """
-                                |// generated from $file - lines ${lineNumbers}
+                                |// generated from $file - lines $lineNumbers
                                 |${docTest.content}
                             """.trimMargin()
             testFile.writeText(testContent)
