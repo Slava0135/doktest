@@ -32,7 +32,7 @@ Basically, this plugin allows you to write documentation tests (or doctests for 
 
 ```kotlin
 plugins {
-    id("com.github.slava0135.doktest")
+    id("io.github.slava0135.doktest") version "0.1.1"
 }
 ...
 dependencies {
@@ -89,6 +89,7 @@ There are 3 options:
 - `nomain` => the sample code won't be surrounded with "main" function (and it won't be executed, unless you write it like test).
 
 To use them write `doctest:option`:
+
 ```kotlin
 /**
  * ```kotlin doctest:nomain
