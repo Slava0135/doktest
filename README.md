@@ -2,6 +2,8 @@
 
 The plugin that verifies your Kotlin code inside KDoc comments.
 
+[**Also check out Intellij IDEA plugin!**](https://plugins.jetbrains.com/plugin/21791-doktest)
+
 ## About
 
 Sometimes you want to add samples into documention for your code.
@@ -130,7 +132,5 @@ tasks.doktestTest {
 ## Notes
 
 I consider this plugin to be experimental (maybe expect some issues).
-
-I am also working on Intellij IDEA plugin to make writing those samples easier.
 
 Feedback and help would be appreciated!
