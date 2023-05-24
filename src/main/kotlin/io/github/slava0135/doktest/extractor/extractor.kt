@@ -103,9 +103,10 @@ private fun extractRawDocTests(doc: Doc): List<RawDocTest> {
                 continue
             }
             option = when (optionArgs.first().uppercase()) {
-                Option.NOMAIN.toString() -> Option.NOMAIN
+                Option.RUN.toString() -> Option.RUN
                 Option.NORUN.toString() -> Option.NORUN
-                else -> Option.RUN
+                Option.NOMAIN.toString() -> Option.NOMAIN
+                else -> option
             }
         } else {
             if (!line.startsWith(DOCTEST_END)) {
