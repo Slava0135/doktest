@@ -1,5 +1,7 @@
 # Doktest Plugin for Gradle
 
+[![Run Tests](https://github.com/Slava0135/doktest/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Slava0135/doktest/actions/workflows/test.yml)
+
 The plugin that verifies your Kotlin code inside KDoc comments.
 
 [**Also check out Intellij IDEA plugin!**](https://plugins.jetbrains.com/plugin/21791-doktest)
