@@ -206,4 +206,25 @@ class DoktestKtTest {
             .withPluginClasspath()
             .buildAndFail()
     }
+
+    @Test
+    fun `test version compatibility`() {
+        readFileFromResource("/cases/simple.kt", "$mainSrc/simple.kt")
+        readFileFromResource("/cases/simple_fail.kt", "$mainSrc/simple_fail.kt")
+        val versions = listOf("8.1.1", "7.6.1", "6.9.4")
+        for (ver in versions) {
+            GradleRunner.create()
+                .withGradleVersion(ver)
+                .withProjectDir(testProjectDir)
+                .withArguments(DOKTEST_TASK_NAME, "--file", "simple", "--line", "4")
+                .withPluginClasspath()
+                .build()
+            GradleRunner.create()
+                .withGradleVersion(ver)
+                .withProjectDir(testProjectDir)
+                .withArguments(DOKTEST_TASK_NAME, "--file", "simple_fail", "--line", "4")
+                .withPluginClasspath()
+                .buildAndFail()
+        }
+    }
 }
