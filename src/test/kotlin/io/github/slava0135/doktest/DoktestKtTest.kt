@@ -227,4 +227,32 @@ class DoktestKtTest {
                 .buildAndFail()
         }
     }
+
+    @Test
+    fun `run performance test`() {
+        val prelude = """
+            |package main
+            |
+            |fun plus(a: Int, b: Int) = a + b
+        """.trimMargin()
+        val file = File(testProjectDir, "$mainSrc/main.kt")
+        file.writeText("$prelude\n")
+        repeat(1000) {
+            val doc = """
+                |/**
+                | * ```kotlin doctest
+                | * val a = $it
+                | * val b = ${it + 1}
+                | * assertEquals(${it + it + 1}, plus(a, b))
+                | * ```
+                | */
+            """.trimMargin()
+            file.appendText("$doc\n")
+        }
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withArguments(DOKTEST_TASK_NAME)
+            .withPluginClasspath()
+            .build()
+    }
 }
